@@ -1,0 +1,1011 @@
+{
+  "plugin": "Ampex ATR-102 Clone",
+  "bank_presets": [
+    {
+      "category": "Master",
+      "presets": [
+        {
+          "name": "Classic 250 Smooth Master",
+          "settings": {
+            "tape": "250",
+            "cal": "+9",
+            "head": "1\"",
+            "speed": 15,
+            "emphasis_eq": [
+              "CCIR"
+            ],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Classic 250 Warm Master",
+          "settings": {
+            "tape": "250",
+            "cal": "+9",
+            "head": "1\"",
+            "speed": 15,
+            "emphasis_eq": [
+              "NAB",
+              "CCIR"
+            ],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Classic Big 456 Master",
+          "settings": {
+            "tape": "456",
+            "cal": "+7.5",
+            "head": "1/2\"",
+            "speed": 15,
+            "emphasis_eq": [
+              "CCIR"
+            ],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Classic Jazz Vision Master",
+          "settings": {
+            "tape": "456",
+            "cal": "+7.5",
+            "head": "1/2\"",
+            "speed": 15,
+            "emphasis_eq": [
+              "CCIR"
+            ],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Classic Nice 456 Master",
+          "settings": {
+            "tape": "456",
+            "cal": "+7.5",
+            "head": "1/2\"",
+            "speed": 15,
+            "emphasis_eq": [
+              "CCIR"
+            ],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Clean Type 250 Master",
+          "settings": {
+            "tape": "250",
+            "cal": "+9",
+            "head": "1\"",
+            "speed": 15,
+            "emphasis_eq": [
+              "CCIR"
+            ],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Clean Type 468 Master",
+          "settings": {
+            "tape": "468",
+            "cal": "+6",
+            "head": "1/4\"",
+            "speed": 15,
+            "emphasis_eq": [
+              "CCIR"
+            ],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Clean Type 900 Master",
+          "settings": {
+            "tape": "900",
+            "cal": "+6",
+            "head": "1/4\"",
+            "speed": 15,
+            "emphasis_eq": [
+              "CCIR"
+            ],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Clean Ultralinear Master",
+          "settings": {
+            "tape": "250",
+            "cal": "+9",
+            "head": "1/2\"",
+            "speed": 15,
+            "emphasis_eq": [
+              "NAB"
+            ],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Pushed 456 Demo Helper",
+          "settings": {
+            "tape": "456",
+            "cal": "+3",
+            "head": "1/2\"",
+            "speed": 15,
+            "emphasis_eq": [],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Pushed 456 Fat Master",
+          "settings": {
+            "tape": "456",
+            "cal": "+7.5",
+            "head": "1/2\"",
+            "speed": 15,
+            "emphasis_eq": [],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Pushed 468 Modern Classic",
+          "settings": {
+            "tape": "468",
+            "cal": "+6",
+            "head": "1/4\"",
+            "speed": 15,
+            "emphasis_eq": [],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Pushed GP9 Hyped Up",
+          "settings": {
+            "tape": "GP9",
+            "cal": "+3",
+            "head": "1/4\"",
+            "speed": 15,
+            "emphasis_eq": [],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        }
+      ]
+    },
+    {
+      "category": "Vintage",
+      "presets": [
+        {
+          "name": "Vintage Analog Warmth",
+          "settings": {
+            "tape": "250",
+            "cal": "+9",
+            "head": "1/4\"",
+            "speed": 15,
+            "emphasis_eq": [
+              "NAB",
+              "CCIR"
+            ],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Vintage Bass",
+          "settings": {
+            "tape": "250",
+            "cal": "+9",
+            "head": "1/4\"",
+            "speed": 15,
+            "emphasis_eq": [
+              "NAB"
+            ],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Vintage Bootleg Lo Fi",
+          "settings": {
+            "tape": "250",
+            "cal": "+9",
+            "head": "1/4\"",
+            "speed": 15,
+            "emphasis_eq": [],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Vintage Classic Dub",
+          "settings": {
+            "tape": "250",
+            "cal": "+9",
+            "head": "1/4\"",
+            "speed": 7.5,
+            "emphasis_eq": [
+              "NAB"
+            ],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Vintage Crunch",
+          "settings": {
+            "tape": "35-90",
+            "cal": "+6",
+            "head": "1/4\"",
+            "speed": 15,
+            "emphasis_eq": [
+              "NAB"
+            ],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Vintage Punch and Glue",
+          "settings": {
+            "tape": "250",
+            "cal": "+9",
+            "head": "1/4\"",
+            "speed": 15,
+            "emphasis_eq": [],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Vintage Soul",
+          "settings": {
+            "tape": "456",
+            "cal": "+9",
+            "head": "1/4\"",
+            "speed": 15,
+            "emphasis_eq": [
+              "NAB"
+            ],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Vintage Sunbaked Cassette",
+          "settings": {
+            "tape": "35-90",
+            "cal": "+3",
+            "head": "1/4\"",
+            "speed": 7.5,
+            "emphasis_eq": [
+              "NAB"
+            ],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Vintage Telephone Call",
+          "settings": {
+            "tape": "35-90",
+            "cal": "+9",
+            "head": "1/4\"",
+            "speed": 3.75,
+            "emphasis_eq": [
+              "NAB"
+            ],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Vintage Type 111 Lo Fi",
+          "settings": {
+            "tape": "111",
+            "cal": "+7.5",
+            "head": "1/4\"",
+            "speed": 15,
+            "emphasis_eq": [],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        }
+      ]
+    },
+    {
+      "category": "Lo-Fi",
+      "presets": [
+        {
+          "name": "Vintage Bootleg Lo Fi",
+          "settings": {
+            "tape": "250",
+            "cal": "+9",
+            "head": "1/4\"",
+            "speed": 15,
+            "emphasis_eq": [],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Vintage Crunch",
+          "settings": {
+            "tape": "35-90",
+            "cal": "+6",
+            "head": "1/4\"",
+            "speed": 15,
+            "emphasis_eq": [
+              "NAB"
+            ],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Vintage Sunbaked Cassette",
+          "settings": {
+            "tape": "35-90",
+            "cal": "+3",
+            "head": "1/4\"",
+            "speed": 7.5,
+            "emphasis_eq": [
+              "NAB"
+            ],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Vintage Telephone Call",
+          "settings": {
+            "tape": "35-90",
+            "cal": "+9",
+            "head": "1/4\"",
+            "speed": 3.75,
+            "emphasis_eq": [
+              "NAB"
+            ],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Vintage Type 111 Lo Fi",
+          "settings": {
+            "tape": "111",
+            "cal": "+3",
+            "head": "1/4\"",
+            "speed": 15,
+            "emphasis_eq": [],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        }
+      ]
+    },
+    {
+      "category": "Clean",
+      "presets": [
+        {
+          "name": "Clean Type 250 Master",
+          "settings": {
+            "tape": "250",
+            "cal": "+9",
+            "head": "1\"",
+            "speed": 15,
+            "emphasis_eq": [
+              "CCIR"
+            ],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Clean Type 468 Master",
+          "settings": {
+            "tape": "468",
+            "cal": "+6",
+            "head": "1/4\"",
+            "speed": 15,
+            "emphasis_eq": [
+              "CCIR"
+            ],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Clean Type 900 Master",
+          "settings": {
+            "tape": "900",
+            "cal": "+6",
+            "head": "1/4\"",
+            "speed": 15,
+            "emphasis_eq": [
+              "CCIR"
+            ],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Clean Ultralinear Master",
+          "settings": {
+            "tape": "250",
+            "cal": "+6",
+            "head": "1/2\"",
+            "speed": 15,
+            "emphasis_eq": [],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        }
+      ]
+    },
+    {
+      "category": "Pushed",
+      "presets": [
+        {
+          "name": "Pushed 456 Demo Helper",
+          "settings": {
+            "tape": "456",
+            "cal": "+3",
+            "head": "1/2\"",
+            "speed": 15,
+            "emphasis_eq": [],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Pushed 456 Fat Master",
+          "settings": {
+            "tape": "456",
+            "cal": "+7.5",
+            "head": "1/2\"",
+            "speed": 15,
+            "emphasis_eq": [],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Pushed 468 Modern Classic",
+          "settings": {
+            "tape": "468",
+            "cal": "+6",
+            "head": "1/4\"",
+            "speed": 15,
+            "emphasis_eq": [],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Pushed Bright and Sizzly",
+          "settings": {
+            "tape": "250",
+            "cal": "+9",
+            "head": "1/4\"",
+            "speed": 15,
+            "emphasis_eq": [
+              "NAB"
+            ],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Pushed Drum Bus",
+          "settings": {
+            "tape": "GP9",
+            "cal": "+3",
+            "head": "1/4\"",
+            "speed": 15,
+            "emphasis_eq": [],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Pushed GP9 Hyped Up",
+          "settings": {
+            "tape": "GP9",
+            "cal": "+3",
+            "head": "1/4\"",
+            "speed": 15,
+            "emphasis_eq": [],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Pushed Guitars",
+          "settings": {
+            "tape": "250",
+            "cal": "+9",
+            "head": "1/4\"",
+            "speed": 15,
+            "emphasis_eq": [],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Pushed Massive Bass",
+          "settings": {
+            "tape": "250",
+            "cal": "+9",
+            "head": "1/2\"",
+            "speed": 15,
+            "emphasis_eq": [],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Pushed Running Hot",
+          "settings": {
+            "tape": "250",
+            "cal": "+9",
+            "head": "1/4\"",
+            "speed": 15,
+            "emphasis_eq": [
+              "NAB"
+            ],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Pushed Snare Edge",
+          "settings": {
+            "tape": "250",
+            "cal": "+9",
+            "head": "1/4\"",
+            "speed": 15,
+            "emphasis_eq": [],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Pushed Vocal Boost",
+          "settings": {
+            "tape": "250",
+            "cal": "+9",
+            "head": "1/4\"",
+            "speed": 15,
+            "emphasis_eq": [
+              "CCIR"
+            ],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        }
+      ]
+    },
+    {
+      "category": "Bright",
+      "presets": [
+        {
+          "name": "Classic Jazz Vision Master",
+          "settings": {
+            "tape": "456",
+            "cal": "+7.5",
+            "head": "1/2\"",
+            "speed": 15,
+            "emphasis_eq": [
+              "CCIR"
+            ],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Clean Type 468 Master",
+          "settings": {
+            "tape": "468",
+            "cal": "+6",
+            "head": "1/4\"",
+            "speed": 15,
+            "emphasis_eq": [
+              "CCIR"
+            ],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Clean Type 900 Master",
+          "settings": {
+            "tape": "900",
+            "cal": "+6",
+            "head": "1/4\"",
+            "speed": 15,
+            "emphasis_eq": [
+              "CCIR"
+            ],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Pushed 456 Demo Helper",
+          "settings": {
+            "tape": "456",
+            "cal": "+3",
+            "head": "1/2\"",
+            "speed": 15,
+            "emphasis_eq": [],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Pushed Bright and Sizzly",
+          "settings": {
+            "tape": "111",
+            "cal": "+3",
+            "head": "1/4\"",
+            "speed": 15,
+            "emphasis_eq": [
+              "NAB"
+            ],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Pushed GP9 Hyped Up",
+          "settings": {
+            "tape": "GP9",
+            "cal": "+3",
+            "head": "1/4\"",
+            "speed": 15,
+            "emphasis_eq": [],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Pushed Running Hot",
+          "settings": {
+            "tape": "250",
+            "cal": "+9",
+            "head": "1/4\"",
+            "speed": 15,
+            "emphasis_eq": [
+              "NAB"
+            ],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Pushed Vocal Boost",
+          "settings": {
+            "tape": "250",
+            "cal": "+9",
+            "head": "1/4\"",
+            "speed": 15,
+            "emphasis_eq": [
+              "CCIR"
+            ],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        }
+      ]
+    },
+    {
+      "category": "Vocal",
+      "presets": [
+        {
+          "name": "Classic Vocal Lift",
+          "settings": {
+            "tape": "900",
+            "cal": "+6",
+            "head": "1/2\"",
+            "speed": 15,
+            "emphasis_eq": [],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Classic Vocal Smooth",
+          "settings": {
+            "tape": "456",
+            "cal": "+6",
+            "head": "1/2\"",
+            "speed": 15,
+            "emphasis_eq": [],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Pushed Vocal Boost",
+          "settings": {
+            "tape": "250",
+            "cal": "+9",
+            "head": "1/4\"",
+            "speed": 15,
+            "emphasis_eq": [
+              "CCIR"
+            ],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Vintage Soul",
+          "settings": {
+            "tape": "456",
+            "cal": "+9",
+            "head": "1/4\"",
+            "speed": 15,
+            "emphasis_eq": [
+              "NAB"
+            ],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Vintage Telephone Call",
+          "settings": {
+            "tape": "35-90",
+            "cal": "+9",
+            "head": "1/4\"",
+            "speed": 3.75,
+            "emphasis_eq": [
+              "NAB"
+            ],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        }
+      ]
+    },
+    {
+      "category": "Bass",
+      "presets": [
+        {
+          "name": "Pushed Massive Bass",
+          "settings": {
+            "tape": "250",
+            "cal": "+9",
+            "head": "1/2\"",
+            "speed": 15,
+            "emphasis_eq": [],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Vintage Bass",
+          "settings": {
+            "tape": "250",
+            "cal": "+9",
+            "head": "1/4\"",
+            "speed": 15,
+            "emphasis_eq": [
+              "NAB"
+            ],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Vintage Classic Dub",
+          "settings": {
+            "tape": "250",
+            "cal": "+9",
+            "head": "1/4\"",
+            "speed": 7.5,
+            "emphasis_eq": [
+              "NAB"
+            ],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        }
+      ]
+    },
+    {
+      "category": "Classic",
+      "presets": [
+        {
+          "name": "Classic 250 Smooth Master",
+          "settings": {
+            "tape": "250",
+            "cal": "+9",
+            "head": "1\"",
+            "speed": 15,
+            "emphasis_eq": [
+              "CCIR"
+            ],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Classic 250 Warm Master",
+          "settings": {
+            "tape": "250",
+            "cal": "+9",
+            "head": "1\"",
+            "speed": 15,
+            "emphasis_eq": [
+              "NAB",
+              "CCIR"
+            ],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Classic Big 456 Master",
+          "settings": {
+            "tape": "456",
+            "cal": "+7.5",
+            "head": "1/2\"",
+            "speed": 15,
+            "emphasis_eq": [
+              "CCIR"
+            ],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Classic Jazz Vision Master",
+          "settings": {
+            "tape": "456",
+            "cal": "+7.5",
+            "head": "1/2\"",
+            "speed": 15,
+            "emphasis_eq": [
+              "CCIR"
+            ],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Classic Nice 456 Master",
+          "settings": {
+            "tape": "456",
+            "cal": "+7.5",
+            "head": "1/2\"",
+            "speed": 15,
+            "emphasis_eq": [
+              "CCIR"
+            ],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Classic Vocal Lift",
+          "settings": {
+            "tape": "900",
+            "cal": "+6",
+            "head": "1/2\"",
+            "speed": 15,
+            "emphasis_eq": [],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Classic Vocal Smooth",
+          "settings": {
+            "tape": "456",
+            "cal": "+6",
+            "head": "1/2\"",
+            "speed": 15,
+            "emphasis_eq": [],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        }
+      ]
+    },
+    {
+      "category": "Drums",
+      "presets": [
+        {
+          "name": "Pushed Drum Bus",
+          "settings": {
+            "tape": "GP9",
+            "cal": "+3",
+            "head": "1/4\"",
+            "speed": 15,
+            "emphasis_eq": [],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Pushed GP9 Hyped Up",
+          "settings": {
+            "tape": "GP9",
+            "cal": "+3",
+            "head": "1/4\"",
+            "speed": 15,
+            "emphasis_eq": [],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Pushed Snare Edge",
+          "settings": {
+            "tape": "250",
+            "cal": "+9",
+            "head": "1/4\"",
+            "speed": 15,
+            "emphasis_eq": [],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Vintage Punch and Glue",
+          "settings": {
+            "tape": "250",
+            "cal": "+9",
+            "head": "1/4\"",
+            "speed": 15,
+            "emphasis_eq": [],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        }
+      ]
+    },
+    {
+      "category": "Guitars",
+      "presets": [
+        {
+          "name": "Pushed Guitars",
+          "settings": {
+            "tape": "250",
+            "cal": "+9",
+            "head": "1/4\"",
+            "speed": 15,
+            "emphasis_eq": [],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        },
+        {
+          "name": "Pushed Running Hot",
+          "settings": {
+            "tape": "250",
+            "cal": "+9",
+            "head": "1/4\"",
+            "speed": 15,
+            "emphasis_eq": [
+              "NAB"
+            ],
+            "link": true,
+            "mode": "Sync/Repro"
+          }
+        }
+      ]
+    }
+  ]
+}

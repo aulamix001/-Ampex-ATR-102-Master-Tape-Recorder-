@@ -24,7 +24,8 @@ private:
     juce::ComboBox presets;
     juce::Label presetDescription;
     juce::TooltipWindow tooltips {this, 500};
-    juce::TextButton save{"SAVE"},load{"LOAD"};
+    juce::TextButton save{"SAVE"},load{"LOAD"},tapePage{"TAPE >"};
+    int formulaPage=0, lastFormula=-1, lastSpeed=-1, lastProgram=-1;
     std::unique_ptr<juce::FileChooser> chooser;
     juce::Image texture;
     float reelAngle=0;

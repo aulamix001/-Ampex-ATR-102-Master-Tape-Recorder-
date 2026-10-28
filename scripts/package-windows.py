@@ -3,6 +3,7 @@
 from pathlib import Path
 import argparse
 import hashlib
+import json
 import re
 import zipfile
 
@@ -14,9 +15,10 @@ bundle = root / args.build / 'ATR102_artefacts/Release/VST3/ATR-102 Tape Studio.
 binary = bundle / 'Contents/x86_64-win/ATR-102 Tape Studio.vst3'
 if not binary.is_file() or binary.read_bytes()[:2] != b'MZ':
     raise SystemExit('Windows x64 VST3 bundle missing; compile first.')
-presets = sorted((root / 'presets').glob('*.atrpreset'))
-if len(presets) != 8:
-    raise SystemExit('Export all eight factory presets before packaging.')
+presets = sorted((root / 'presets').rglob('*.atrpreset'))
+expected = json.loads((root / 'presets/catalog.json').read_text())['presets']
+if len(presets) != len(expected):
+    raise SystemExit(f'Export all {len(expected)} categorized programs before packaging.')
 version = re.search(r'project\(ATR102TapeStudio VERSION ([0-9.]+)', (root / 'CMakeLists.txt').read_text())[1]
 out = root / f'releases/ATR102-Windows-x64-v{version}.zip'
 out.parent.mkdir(exist_ok=True)
@@ -24,9 +26,10 @@ with zipfile.ZipFile(out, 'w', zipfile.ZIP_DEFLATED, compresslevel=9) as z:
     for f in sorted(bundle.rglob('*')):
         if f.is_file():
             z.write(f, f.relative_to(bundle.parent))
-    z.write(root / 'presets/presets.json', 'presets/presets.json')
+    for metadata in ['presets.json', 'imported-bank.json', 'catalog.json', 'README.md']:
+        z.write(root / 'presets' / metadata, 'presets/' + metadata)
     for f in presets:
-        z.write(f, 'presets/' + f.name)
+        z.write(f, f.relative_to(root))
     for name in ['README.md', 'LICENSE', 'THIRD_PARTY.md', 'VALIDATION.md']:
         z.write(root / name, name)
     z.writestr('INSTALL-WINDOWS.txt', 'Copy the entire ATR-102 Tape Studio.vst3 folder to:\r\nC:\\Program Files\\Common Files\\VST3\\\r\nThen rescan plugins in your 64-bit Windows DAW.\r\nDo not copy only the inner binary.\r\nFactory presets are built in; external .atrpreset files can be loaded with LOAD.\r\nThis independent model is unsigned. See README.md and VALIDATION.md.\r\n')

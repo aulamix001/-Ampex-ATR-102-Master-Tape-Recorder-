@@ -51,7 +51,8 @@ void TapeProcessor::parameterChanged(const juce::String& id,float v){
     if(id=="autoCal"&&v>.5f)for(auto suffix:{"L","R"})for(const auto& trim:trimNames)setParameter(trim+suffix,0);
     if(id=="speed"||id=="formula"){
         int s=(int)value("speed"),f=(int)value("formula");
-        if((s==0 && (f==0||f>=5)) || (s==1&&f>=4) || (s>=2&&(f==2||f==3||f==4)))setParameter("formula",1);
+        auto choices=availableFormulas(s);
+        if(std::find(choices.begin(),choices.end(),f)==choices.end())setParameter("formula",1);
     }
     changing.store(false);
 }
@@ -106,22 +107,24 @@ void TapeProcessor::processBlock(juce::AudioBuffer<float>& buffer,juce::MidiBuff
 int TapeProcessor::getNumPrograms(){return factoryPresets.size();}
 const juce::String TapeProcessor::getProgramName(int i){return factoryPresets[juce::jlimit(0,getNumPrograms()-1,i)]["name"].toString();}
 juce::String TapeProcessor::getProgramDescription(int i) { return factoryPresets[juce::jlimit(0,getNumPrograms()-1,i)]["description"].toString(); }
+juce::String TapeProcessor::getProgramCategory(int i) { return factoryPresets[juce::jlimit(0,getNumPrograms()-1,i)]["category"].toString(); }
+juce::String TapeProcessor::getProgramId(int i) { return factoryPresets[juce::jlimit(0,getNumPrograms()-1,i)]["id"].toString(); }
+juce::var TapeProcessor::getProgramParameters(int i) { return factoryPresets[juce::jlimit(0,getNumPrograms()-1,i)]["mapped_parameters"]; }
+std::vector<int> TapeProcessor::availableFormulas(int speedIndex) {
+    if(speedIndex==0)return {1,2,3,4};
+    if(speedIndex==1)return {0,1,2,3,4,5,6};
+    return {0,1,5,6};
+}
 void TapeProcessor::setCurrentProgram(int i){
     i=juce::jlimit(0,getNumPrograms()-1,i);currentProgram.store(i);
     changing.store(true);
     for(auto* p:getParameters())if(auto* rp=dynamic_cast<juce::RangedAudioParameter*>(p))if(rp->paramID!="open")rp->setValueNotifyingHost(rp->getDefaultValue());
-    auto set=[&](const char* id,float v){setParameter(id,v);};
-    if(i==1){set("speed",0);set("formula",4);set("noise",0);set("wow",0);set("recordL",-3);set("recordR",-3);set("reproduceL",3);set("reproduceR",3);}
-    if(i==2){set("recordL",4);set("recordR",4);set("reproduceL",-4);set("reproduceR",-4);set("formula",1);}
-    if(i==3){set("speed",2);set("formula",6);set("recordL",2);set("recordR",2);set("reproduceL",-2);set("reproduceR",-2);}
-    if(i==4){set("speed",0);set("formula",3);set("cal",3);set("head",0);set("noise",0);}
-    if(i==5){set("speed",2);set("formula",0);set("cal",0);set("head",2);}
-    if(i==6){set("formula",2);set("recordL",1.5f);set("recordR",1.5f);set("reproduceL",-1.5f);set("reproduceR",-1.5f);set("wow",0);set("noise",0);}
-    if(i==7)set("path",3);
+    auto settings=getProgramParameters(i);
+    if(auto* object=settings.getDynamicObject())for(const auto& property:object->getProperties())setParameter(property.name.toString(),(float)property.value);
     changing.store(false);updateHostDisplay();
 }
-void TapeProcessor::getStateInformation(juce::MemoryBlock& dest){auto tree=parameters.copyState();tree.setProperty("program",currentProgram.load(),nullptr);if(auto xml=tree.createXml())copyXmlToBinary(*xml,dest);}
-void TapeProcessor::setStateInformation(const void* data,int size){if(auto xml=getXmlFromBinary(data,size))if(xml->hasTagName("ATR102")){changing.store(true);auto tree=juce::ValueTree::fromXml(*xml);currentProgram.store(juce::jlimit(0,getNumPrograms()-1,(int)tree.getProperty("program",0)));parameters.replaceState(tree);changing.store(false);}}
+void TapeProcessor::getStateInformation(juce::MemoryBlock& dest){auto tree=parameters.copyState();tree.setProperty("program",currentProgram.load(),nullptr);tree.setProperty("programId",getProgramId(currentProgram.load()),nullptr);if(auto xml=tree.createXml())copyXmlToBinary(*xml,dest);}
+void TapeProcessor::setStateInformation(const void* data,int size){if(auto xml=getXmlFromBinary(data,size))if(xml->hasTagName("ATR102")){changing.store(true);auto tree=juce::ValueTree::fromXml(*xml);int program=juce::jlimit(0,getNumPrograms()-1,(int)tree.getProperty("program",0));auto id=tree.getProperty("programId").toString();if(id.isNotEmpty())for(int i=0;i<getNumPrograms();++i)if(getProgramId(i)==id){program=i;break;}currentProgram.store(program);parameters.replaceState(tree);changing.store(false);}}
 void TapeProcessor::savePreset(const juce::File& file){juce::MemoryBlock data;getStateInformation(data);file.replaceWithData(data.getData(),data.getSize());}
 bool TapeProcessor::loadPreset(const juce::File& file){juce::MemoryBlock data;if(!file.loadFileAsData(data)||!getXmlFromBinary(data.getData(),(int)data.getSize()))return false;auto xml=getXmlFromBinary(data.getData(),(int)data.getSize());if(!xml->hasTagName("ATR102"))return false;setStateInformation(data.getData(),(int)data.getSize());return true;}
 juce::AudioProcessorEditor* TapeProcessor::createEditor(){return new TapeEditor(*this);}

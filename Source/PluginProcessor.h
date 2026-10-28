@@ -25,6 +25,10 @@ public:
     void setCurrentProgram(int) override;
     const juce::String getProgramName(int) override;
     juce::String getProgramDescription(int);
+    juce::String getProgramCategory(int);
+    juce::String getProgramId(int);
+    juce::var getProgramParameters(int);
+    static std::vector<int> availableFormulas(int speedIndex);
     void changeProgramName(int, const juce::String&) override {}
     void getStateInformation(juce::MemoryBlock&) override;
     void setStateInformation(const void*, int) override;

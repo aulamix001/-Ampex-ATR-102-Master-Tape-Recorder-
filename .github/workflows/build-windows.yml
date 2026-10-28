@@ -14,7 +14,8 @@ jobs:
       - name: Verify preset metadata
         run: |
           python scripts/generate-preset-metadata.py
-          git diff --exit-code -- Source/PresetMetadata.h
+          git diff --exit-code -- Source/PresetMetadata.h presets/catalog.json
+          python tests/test_preset_catalog.py
       - name: Configure Windows x64
         run: cmake -S . -B build -A x64 -DCMAKE_BUILD_TYPE=Release
       - name: Compile VST3, standalone and tests
