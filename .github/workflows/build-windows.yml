@@ -11,6 +11,10 @@ jobs:
     runs-on: windows-2022
     steps:
       - uses: actions/checkout@v4
+      - name: Verify preset metadata
+        run: |
+          python scripts/generate-preset-metadata.py
+          git diff --exit-code -- Source/PresetMetadata.h
       - name: Configure Windows x64
         run: cmake -S . -B build -A x64 -DCMAKE_BUILD_TYPE=Release
       - name: Compile VST3, standalone and tests
@@ -20,6 +24,9 @@ jobs:
       - name: Test real VST3 loading and processing
         shell: pwsh
         run: '& "build/ATR102Tests_artefacts/Release/ATR102Tests.exe" --vst3 "$PWD/build/ATR102_artefacts/Release/VST3/ATR-102 Tape Studio.vst3"'
+      - name: Verify both native editor panels
+        shell: pwsh
+        run: '& "build/ATR102Tests_artefacts/Release/ATR102Tests.exe" --render-ui'
       - name: Export factory presets
         shell: pwsh
         run: '& "build/ATR102Tests_artefacts/Release/ATR102Tests.exe" --export-presets'

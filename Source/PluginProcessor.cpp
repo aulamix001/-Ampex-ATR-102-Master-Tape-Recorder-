@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
+#include "PresetMetadata.h"
 namespace {
-const juce::StringArray presetNames {"Calibrated 15 IPS", "Clean 30 IPS", "Warm Master", "Low Speed Color", "Wide Open GP9", "Vintage 250", "Gentle Glue", "Through Reference"};
+const auto factoryPresets = juce::JSON::parse(juce::String::fromUTF8(presetMetadataJson)).getProperty("presets", juce::var());
 constexpr float speeds[] {30,15,7.5f,3.75f};
 constexpr float drives[] {2.8f,2.2f,2.0f,1.5f,1.4f,2.5f,3.2f};
 constexpr float levels[] {3,6,7.5f,9};
@@ -102,16 +103,17 @@ void TapeProcessor::processBlock(juce::AudioBuffer<float>& buffer,juce::MidiBuff
     oversampling->processSamplesDown(block);
     for(int c=0;c<2;++c)outputMeter[(size_t)c].store(buffer.getRMSLevel(c,0,buffer.getNumSamples()));
 }
-int TapeProcessor::getNumPrograms(){return presetNames.size();}
-const juce::String TapeProcessor::getProgramName(int i){return presetNames[juce::jlimit(0,presetNames.size()-1,i)];}
+int TapeProcessor::getNumPrograms(){return factoryPresets.size();}
+const juce::String TapeProcessor::getProgramName(int i){return factoryPresets[juce::jlimit(0,getNumPrograms()-1,i)]["name"].toString();}
+juce::String TapeProcessor::getProgramDescription(int i) { return factoryPresets[juce::jlimit(0,getNumPrograms()-1,i)]["description"].toString(); }
 void TapeProcessor::setCurrentProgram(int i){
-    i=juce::jlimit(0,presetNames.size()-1,i);currentProgram.store(i);
+    i=juce::jlimit(0,getNumPrograms()-1,i);currentProgram.store(i);
     changing.store(true);
     for(auto* p:getParameters())if(auto* rp=dynamic_cast<juce::RangedAudioParameter*>(p))if(rp->paramID!="open")rp->setValueNotifyingHost(rp->getDefaultValue());
     auto set=[&](const char* id,float v){setParameter(id,v);};
     if(i==1){set("speed",0);set("formula",4);set("noise",0);set("wow",0);set("recordL",-3);set("recordR",-3);set("reproduceL",3);set("reproduceR",3);}
     if(i==2){set("recordL",4);set("recordR",4);set("reproduceL",-4);set("reproduceR",-4);set("formula",1);}
-    if(i==3){set("speed",3);set("formula",6);set("recordL",2);set("recordR",2);set("reproduceL",-2);set("reproduceR",-2);}
+    if(i==3){set("speed",2);set("formula",6);set("recordL",2);set("recordR",2);set("reproduceL",-2);set("reproduceR",-2);}
     if(i==4){set("speed",0);set("formula",3);set("cal",3);set("head",0);set("noise",0);}
     if(i==5){set("speed",2);set("formula",0);set("cal",0);set("head",2);}
     if(i==6){set("formula",2);set("recordL",1.5f);set("recordR",1.5f);set("reproduceL",-1.5f);set("reproduceR",-1.5f);set("wow",0);set("noise",0);}

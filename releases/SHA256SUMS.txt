@@ -1,1 +1,2 @@
 0c758cebbe6b2098ceebd937278bc1cb6e8ec035fbf45c51ec8950a70bf7db7d  ATR102-Windows-x64-v0.1.0.zip
+8b0555d40c2ec45f2b2755eaa743f79d39e024f17c5d9abaeb8e6886bbfe682f  ATR102-Windows-x64-v0.1.1.zip

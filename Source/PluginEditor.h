@@ -22,6 +22,8 @@ private:
     std::vector<Dial> dials;
     std::vector<Switch> switches;
     juce::ComboBox presets;
+    juce::Label presetDescription;
+    juce::TooltipWindow tooltips {this, 500};
     juce::TextButton save{"SAVE"},load{"LOAD"};
     std::unique_ptr<juce::FileChooser> chooser;
     juce::Image texture;
