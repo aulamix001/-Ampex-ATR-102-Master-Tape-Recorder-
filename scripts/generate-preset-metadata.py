@@ -21,6 +21,20 @@ SPEEDS = [30, 15, 7.5, 3.75]
 CATEGORIES = ['Master', 'Vintage', 'Lo-Fi', 'Clean', 'Pushed', 'Bright', 'Vocal', 'Bass', 'Classic', 'Drums', 'Guitars']
 
 
+CCIR_CATEGORIES = {'Master', 'Clean', 'Bright', 'Vocal'}
+
+
+def resolve_eq(category, speed, options):
+    """Fill only ambiguous EQ fields; never override a single explicit setting."""
+    if len(options) == 1:
+        return options[0], 'Explicit source EQ retained.'
+    preferred = 'CCIR' if speed == 15 and category in CCIR_CATEGORIES else 'NAB'
+    selected = preferred if not options or preferred in options else options[0]
+    reason = ('Clarity-oriented 15 IPS starting point' if selected == 'CCIR'
+              else 'Conservative vintage/low-speed starting point')
+    return selected, f'{reason}: {selected}; chosen for an ambiguous source field, not recovered UAD calibration.'
+
+
 def build_catalog(factory, bank):
     if len(factory['presets']) != 8:
         raise ValueError('The original eight program indices must remain stable')
@@ -40,7 +54,7 @@ def build_catalog(factory, bank):
             eq_options = settings['emphasis_eq']
             if not isinstance(settings['link'], bool) or any(eq not in ['NAB', 'CCIR'] for eq in eq_options):
                 raise ValueError(f'Invalid settings: {category}/{name}')
-            eq = eq_options[0] if eq_options else 'NAB'
+            eq, eq_note = resolve_eq(category, settings['speed'], eq_options)
             mode = settings['mode']
             path = {'Sync/Repro': 2, 'SYNC': 0, 'INPUT': 1, 'REPRO': 2, 'THRU': 3}[mode]
             mapped = {
@@ -50,16 +64,20 @@ def build_catalog(factory, bank):
             }
             notes = []
             if not eq_options:
-                notes.append('Emphasis EQ unspecified: use the NAB default.')
+                notes.append('Emphasis EQ unspecified. ' + eq_note)
             elif len(eq_options) > 1:
-                notes.append('Multiple emphasis choices: use the first (NAB); retain both source values.')
+                notes.append('Multiple emphasis choices retained in source. ' + eq_note)
             if mode == 'Sync/Repro':
                 notes.append('Sync/Repro interpreted as REPRO; SYNC remains independently selectable.')
             description = f"{settings['tape']} / {settings['speed']:g} IPS / CAL {settings['cal']} / {settings['head']} / {eq} / REPRO"
             programs.append(dict(item, id=f'bank/{category}/{name}', category=category,
                                  description=description, mapped_parameters=mapped, mapping_notes=notes))
     return {'schema_version': 1, 'provenance': 'User-supplied bank; official origin and completeness not independently verified.',
-            'mapping_policy': {'empty_eq': 'NAB', 'multiple_eq': 'first option', 'Sync/Repro': 'REPRO',
+            'mapping_policy': {'revision': 2, 'empty_eq': 'engineering starting point by category and speed',
+                               'multiple_eq': 'prefer the engineering choice among supplied options',
+                               'explicit_eq': 'retain exactly',
+                               'ccir_at_15_ips': sorted(CCIR_CATEGORIES),
+                               'other_ambiguous_eq': 'NAB', 'Sync/Repro': 'REPRO',
                                'unspecified_parameters': 'plugin defaults', 'duplicate_names': 'retain category-specific entries'},
             'presets': programs}
 

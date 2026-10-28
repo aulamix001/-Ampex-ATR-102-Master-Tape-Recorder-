@@ -1,4 +1,4 @@
-# Build and validation — 0.1.2
+# Build and validation — 0.1.3
 
 ## Delivered platform
 
@@ -9,13 +9,13 @@ Windows x86-64 VST3 bundle, Release cross-build with GCC MinGW-w64 14.2 POSIX an
 - 8 existing Factory programs remain at indices 0–7, followed by 72 supplied category entries: Master 13, Vintage 10, Lo-Fi 5, Clean 4, Pushed 11, Bright 8, Vocal 5, Bass 3, Classic 7, Drums 4, Guitars 2.
 - The bank has 32 distinct names and repeated entries across categories. All 72 entries are retained. Three names have conflicting settings between categories; no variants were merged or overwritten.
 - `presets/imported-bank.json` preserves the complete supplied JSON. Generated `presets/catalog.json` records source settings, mapped internal values, stable IDs and mapping notes. `Source/PresetMetadata.h` embeds the same catalog in the VST3.
-- Empty EQ selects NAB; multiple EQ options select the first (NAB); Sync/Repro selects REPRO. Unspecified gains, trims and circuit switches use plugin defaults. These are documented interpretation rules, not recovered hidden original settings.
+- A single explicit EQ is retained. Ambiguous EQ at 15 IPS uses CCIR for Master/Clean/Bright/Vocal and NAB for other categories; at low speeds it uses NAB. Sync/Repro selects REPRO. Version 0.1.3 updates ten ambiguous EQ selections; no source setting or program identity was altered. Unspecified gains, trims and circuit switches use plugin defaults. These are user-authorized engineering starting choices, not recovered hidden original settings.
 - All seven formulas are selectable at 15 IPS so the imported 900, 35-90 and 111 settings are not coerced to 456. A two-page matrix shows four formulas at a time. Loading a preset reveals its selected formula page.
 - Category-qualified IDs are saved along with the legacy numeric program index. Original program order, parameter IDs and explicit saved-session values are retained.
 
 ## Executed checks
 
-- Python catalog suite: 3 tests passed. Checks every imported field against the supplied bank, original eight program identities, all category entries, three conflicting-name variants, unique IDs and the generated native catalog.
+- Python catalog suite: 4 tests passed. Checks every imported field against the supplied bank, original eight program identities, all category entries, three conflicting-name variants, unique IDs and the generated native catalog. Explicit, empty, multiple-choice, low-speed and category-specific EQ policy cases are checked separately.
 - Windows test executable under Wine 10 / Xvfb: each of the 80 programs processed at 44.1, 48 and 96 kHz with finite bounded output. Every mapped parameter was checked after program selection and state restoration. Stereo linking, inverse autogain, calibration reset, speed/formula selection, saturation activity, preserved panel state and latency-compensated unity bypass were exercised.
 - Actual Windows VST3 scan, instantiation and audio processing through JUCE's VST3 host under Wine: PASS (1,477,664 assertions including the processor suite).
 - Both native editor states rendered, exactly 4 main / 14 main-plus-calibration sliders with nonempty bounds, all 80 menu items, an imported 900 selection, tape-page switching and same-formula category-variant page restoration: PASS (1,477,706 assertions including the processor suite).
@@ -33,4 +33,4 @@ The DSP and original procedural graphics approximate tape behavior and the visua
 
 ## Reproduce
 
-See README.md for the Windows MSVC workflow. Regenerate metadata with `python scripts/generate-preset-metadata.py`; verify it with `python tests/test_preset_catalog.py`. Run `ATR102Tests --vst3 <bundle>`, `--render-ui`, and `--export-presets`, then `python scripts/package-windows.py --build <build-directory>`. Native Linux checks from earlier versions were not rerun for 0.1.2.
+See README.md for the Windows MSVC workflow. Regenerate metadata with `python scripts/generate-preset-metadata.py`; verify it with `python tests/test_preset_catalog.py`. Run `ATR102Tests --vst3 <bundle>`, `--render-ui`, and `--export-presets`, then `python scripts/package-windows.py --build <build-directory>`. Native Linux checks from earlier versions were not rerun for 0.1.3.

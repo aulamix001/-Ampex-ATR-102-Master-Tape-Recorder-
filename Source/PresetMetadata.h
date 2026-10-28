@@ -4,8 +4,17 @@ static constexpr const char* presetMetadataJson = u8R"PRESETS({
   "schema_version": 1,
   "provenance": "User-supplied bank; official origin and completeness not independently verified.",
   "mapping_policy": {
-    "empty_eq": "NAB",
-    "multiple_eq": "first option",
+    "revision": 2,
+    "empty_eq": "engineering starting point by category and speed",
+    "multiple_eq": "prefer the engineering choice among supplied options",
+    "explicit_eq": "retain exactly",
+    "ccir_at_15_ips": [
+      "Bright",
+      "Clean",
+      "Master",
+      "Vocal"
+    ],
+    "other_ambiguous_eq": "NAB",
     "Sync/Repro": "REPRO",
     "unspecified_parameters": "plugin defaults",
     "duplicate_names": "retain category-specific entries"
@@ -155,18 +164,18 @@ static constexpr const char* presetMetadataJson = u8R"PRESETS({
       },
       "id": "bank/Master/Classic 250 Warm Master",
       "category": "Master",
-      "description": "250 / 15 IPS / CAL +9 / 1\" / NAB / REPRO",
+      "description": "250 / 15 IPS / CAL +9 / 1\" / CCIR / REPRO",
       "mapped_parameters": {
         "formula": 0,
         "cal": 3,
         "head": 0,
         "speed": 1,
-        "eq": 0,
+        "eq": 1,
         "link": 1,
         "path": 2
       },
       "mapping_notes": [
-        "Multiple emphasis choices: use the first (NAB); retain both source values.",
+        "Multiple emphasis choices retained in source. Clarity-oriented 15 IPS starting point: CCIR; chosen for an ambiguous source field, not recovered UAD calibration.",
         "Sync/Repro interpreted as REPRO; SYNC remains independently selectable."
       ]
     },
@@ -386,18 +395,18 @@ static constexpr const char* presetMetadataJson = u8R"PRESETS({
       },
       "id": "bank/Master/Pushed 456 Demo Helper",
       "category": "Master",
-      "description": "456 / 15 IPS / CAL +3 / 1/2\" / NAB / REPRO",
+      "description": "456 / 15 IPS / CAL +3 / 1/2\" / CCIR / REPRO",
       "mapped_parameters": {
         "formula": 1,
         "cal": 0,
         "head": 1,
         "speed": 1,
-        "eq": 0,
+        "eq": 1,
         "link": 1,
         "path": 2
       },
       "mapping_notes": [
-        "Emphasis EQ unspecified: use the NAB default.",
+        "Emphasis EQ unspecified. Clarity-oriented 15 IPS starting point: CCIR; chosen for an ambiguous source field, not recovered UAD calibration.",
         "Sync/Repro interpreted as REPRO; SYNC remains independently selectable."
       ]
     },
@@ -414,18 +423,18 @@ static constexpr const char* presetMetadataJson = u8R"PRESETS({
       },
       "id": "bank/Master/Pushed 456 Fat Master",
       "category": "Master",
-      "description": "456 / 15 IPS / CAL +7.5 / 1/2\" / NAB / REPRO",
+      "description": "456 / 15 IPS / CAL +7.5 / 1/2\" / CCIR / REPRO",
       "mapped_parameters": {
         "formula": 1,
         "cal": 2,
         "head": 1,
         "speed": 1,
-        "eq": 0,
+        "eq": 1,
         "link": 1,
         "path": 2
       },
       "mapping_notes": [
-        "Emphasis EQ unspecified: use the NAB default.",
+        "Emphasis EQ unspecified. Clarity-oriented 15 IPS starting point: CCIR; chosen for an ambiguous source field, not recovered UAD calibration.",
         "Sync/Repro interpreted as REPRO; SYNC remains independently selectable."
       ]
     },
@@ -442,18 +451,18 @@ static constexpr const char* presetMetadataJson = u8R"PRESETS({
       },
       "id": "bank/Master/Pushed 468 Modern Classic",
       "category": "Master",
-      "description": "468 / 15 IPS / CAL +6 / 1/4\" / NAB / REPRO",
+      "description": "468 / 15 IPS / CAL +6 / 1/4\" / CCIR / REPRO",
       "mapped_parameters": {
         "formula": 2,
         "cal": 1,
         "head": 2,
         "speed": 1,
-        "eq": 0,
+        "eq": 1,
         "link": 1,
         "path": 2
       },
       "mapping_notes": [
-        "Emphasis EQ unspecified: use the NAB default.",
+        "Emphasis EQ unspecified. Clarity-oriented 15 IPS starting point: CCIR; chosen for an ambiguous source field, not recovered UAD calibration.",
         "Sync/Repro interpreted as REPRO; SYNC remains independently selectable."
       ]
     },
@@ -470,18 +479,18 @@ static constexpr const char* presetMetadataJson = u8R"PRESETS({
       },
       "id": "bank/Master/Pushed GP9 Hyped Up",
       "category": "Master",
-      "description": "GP9 / 15 IPS / CAL +3 / 1/4\" / NAB / REPRO",
+      "description": "GP9 / 15 IPS / CAL +3 / 1/4\" / CCIR / REPRO",
       "mapped_parameters": {
         "formula": 3,
         "cal": 0,
         "head": 2,
         "speed": 1,
-        "eq": 0,
+        "eq": 1,
         "link": 1,
         "path": 2
       },
       "mapping_notes": [
-        "Emphasis EQ unspecified: use the NAB default.",
+        "Emphasis EQ unspecified. Clarity-oriented 15 IPS starting point: CCIR; chosen for an ambiguous source field, not recovered UAD calibration.",
         "Sync/Repro interpreted as REPRO; SYNC remains independently selectable."
       ]
     },
@@ -512,7 +521,7 @@ static constexpr const char* presetMetadataJson = u8R"PRESETS({
         "path": 2
       },
       "mapping_notes": [
-        "Multiple emphasis choices: use the first (NAB); retain both source values.",
+        "Multiple emphasis choices retained in source. Conservative vintage/low-speed starting point: NAB; chosen for an ambiguous source field, not recovered UAD calibration.",
         "Sync/Repro interpreted as REPRO; SYNC remains independently selectable."
       ]
     },
@@ -569,7 +578,7 @@ static constexpr const char* presetMetadataJson = u8R"PRESETS({
         "path": 2
       },
       "mapping_notes": [
-        "Emphasis EQ unspecified: use the NAB default.",
+        "Emphasis EQ unspecified. Conservative vintage/low-speed starting point: NAB; chosen for an ambiguous source field, not recovered UAD calibration.",
         "Sync/Repro interpreted as REPRO; SYNC remains independently selectable."
       ]
     },
@@ -655,7 +664,7 @@ static constexpr const char* presetMetadataJson = u8R"PRESETS({
         "path": 2
       },
       "mapping_notes": [
-        "Emphasis EQ unspecified: use the NAB default.",
+        "Emphasis EQ unspecified. Conservative vintage/low-speed starting point: NAB; chosen for an ambiguous source field, not recovered UAD calibration.",
         "Sync/Repro interpreted as REPRO; SYNC remains independently selectable."
       ]
     },
@@ -770,7 +779,7 @@ static constexpr const char* presetMetadataJson = u8R"PRESETS({
         "path": 2
       },
       "mapping_notes": [
-        "Emphasis EQ unspecified: use the NAB default.",
+        "Emphasis EQ unspecified. Conservative vintage/low-speed starting point: NAB; chosen for an ambiguous source field, not recovered UAD calibration.",
         "Sync/Repro interpreted as REPRO; SYNC remains independently selectable."
       ]
     },
@@ -798,7 +807,7 @@ static constexpr const char* presetMetadataJson = u8R"PRESETS({
         "path": 2
       },
       "mapping_notes": [
-        "Emphasis EQ unspecified: use the NAB default.",
+        "Emphasis EQ unspecified. Conservative vintage/low-speed starting point: NAB; chosen for an ambiguous source field, not recovered UAD calibration.",
         "Sync/Repro interpreted as REPRO; SYNC remains independently selectable."
       ]
     },
@@ -913,7 +922,7 @@ static constexpr const char* presetMetadataJson = u8R"PRESETS({
         "path": 2
       },
       "mapping_notes": [
-        "Emphasis EQ unspecified: use the NAB default.",
+        "Emphasis EQ unspecified. Conservative vintage/low-speed starting point: NAB; chosen for an ambiguous source field, not recovered UAD calibration.",
         "Sync/Repro interpreted as REPRO; SYNC remains independently selectable."
       ]
     },
@@ -1017,18 +1026,18 @@ static constexpr const char* presetMetadataJson = u8R"PRESETS({
       },
       "id": "bank/Clean/Clean Ultralinear Master",
       "category": "Clean",
-      "description": "250 / 15 IPS / CAL +6 / 1/2\" / NAB / REPRO",
+      "description": "250 / 15 IPS / CAL +6 / 1/2\" / CCIR / REPRO",
       "mapped_parameters": {
         "formula": 0,
         "cal": 1,
         "head": 1,
         "speed": 1,
-        "eq": 0,
+        "eq": 1,
         "link": 1,
         "path": 2
       },
       "mapping_notes": [
-        "Emphasis EQ unspecified: use the NAB default.",
+        "Emphasis EQ unspecified. Clarity-oriented 15 IPS starting point: CCIR; chosen for an ambiguous source field, not recovered UAD calibration.",
         "Sync/Repro interpreted as REPRO; SYNC remains independently selectable."
       ]
     },
@@ -1056,7 +1065,7 @@ static constexpr const char* presetMetadataJson = u8R"PRESETS({
         "path": 2
       },
       "mapping_notes": [
-        "Emphasis EQ unspecified: use the NAB default.",
+        "Emphasis EQ unspecified. Conservative vintage/low-speed starting point: NAB; chosen for an ambiguous source field, not recovered UAD calibration.",
         "Sync/Repro interpreted as REPRO; SYNC remains independently selectable."
       ]
     },
@@ -1084,7 +1093,7 @@ static constexpr const char* presetMetadataJson = u8R"PRESETS({
         "path": 2
       },
       "mapping_notes": [
-        "Emphasis EQ unspecified: use the NAB default.",
+        "Emphasis EQ unspecified. Conservative vintage/low-speed starting point: NAB; chosen for an ambiguous source field, not recovered UAD calibration.",
         "Sync/Repro interpreted as REPRO; SYNC remains independently selectable."
       ]
     },
@@ -1112,7 +1121,7 @@ static constexpr const char* presetMetadataJson = u8R"PRESETS({
         "path": 2
       },
       "mapping_notes": [
-        "Emphasis EQ unspecified: use the NAB default.",
+        "Emphasis EQ unspecified. Conservative vintage/low-speed starting point: NAB; chosen for an ambiguous source field, not recovered UAD calibration.",
         "Sync/Repro interpreted as REPRO; SYNC remains independently selectable."
       ]
     },
@@ -1169,7 +1178,7 @@ static constexpr const char* presetMetadataJson = u8R"PRESETS({
         "path": 2
       },
       "mapping_notes": [
-        "Emphasis EQ unspecified: use the NAB default.",
+        "Emphasis EQ unspecified. Conservative vintage/low-speed starting point: NAB; chosen for an ambiguous source field, not recovered UAD calibration.",
         "Sync/Repro interpreted as REPRO; SYNC remains independently selectable."
       ]
     },
@@ -1197,7 +1206,7 @@ static constexpr const char* presetMetadataJson = u8R"PRESETS({
         "path": 2
       },
       "mapping_notes": [
-        "Emphasis EQ unspecified: use the NAB default.",
+        "Emphasis EQ unspecified. Conservative vintage/low-speed starting point: NAB; chosen for an ambiguous source field, not recovered UAD calibration.",
         "Sync/Repro interpreted as REPRO; SYNC remains independently selectable."
       ]
     },
@@ -1225,7 +1234,7 @@ static constexpr const char* presetMetadataJson = u8R"PRESETS({
         "path": 2
       },
       "mapping_notes": [
-        "Emphasis EQ unspecified: use the NAB default.",
+        "Emphasis EQ unspecified. Conservative vintage/low-speed starting point: NAB; chosen for an ambiguous source field, not recovered UAD calibration.",
         "Sync/Repro interpreted as REPRO; SYNC remains independently selectable."
       ]
     },
@@ -1253,7 +1262,7 @@ static constexpr const char* presetMetadataJson = u8R"PRESETS({
         "path": 2
       },
       "mapping_notes": [
-        "Emphasis EQ unspecified: use the NAB default.",
+        "Emphasis EQ unspecified. Conservative vintage/low-speed starting point: NAB; chosen for an ambiguous source field, not recovered UAD calibration.",
         "Sync/Repro interpreted as REPRO; SYNC remains independently selectable."
       ]
     },
@@ -1310,7 +1319,7 @@ static constexpr const char* presetMetadataJson = u8R"PRESETS({
         "path": 2
       },
       "mapping_notes": [
-        "Emphasis EQ unspecified: use the NAB default.",
+        "Emphasis EQ unspecified. Conservative vintage/low-speed starting point: NAB; chosen for an ambiguous source field, not recovered UAD calibration.",
         "Sync/Repro interpreted as REPRO; SYNC remains independently selectable."
       ]
     },
@@ -1443,18 +1452,18 @@ static constexpr const char* presetMetadataJson = u8R"PRESETS({
       },
       "id": "bank/Bright/Pushed 456 Demo Helper",
       "category": "Bright",
-      "description": "456 / 15 IPS / CAL +3 / 1/2\" / NAB / REPRO",
+      "description": "456 / 15 IPS / CAL +3 / 1/2\" / CCIR / REPRO",
       "mapped_parameters": {
         "formula": 1,
         "cal": 0,
         "head": 1,
         "speed": 1,
-        "eq": 0,
+        "eq": 1,
         "link": 1,
         "path": 2
       },
       "mapping_notes": [
-        "Emphasis EQ unspecified: use the NAB default.",
+        "Emphasis EQ unspecified. Clarity-oriented 15 IPS starting point: CCIR; chosen for an ambiguous source field, not recovered UAD calibration.",
         "Sync/Repro interpreted as REPRO; SYNC remains independently selectable."
       ]
     },
@@ -1500,18 +1509,18 @@ static constexpr const char* presetMetadataJson = u8R"PRESETS({
       },
       "id": "bank/Bright/Pushed GP9 Hyped Up",
       "category": "Bright",
-      "description": "GP9 / 15 IPS / CAL +3 / 1/4\" / NAB / REPRO",
+      "description": "GP9 / 15 IPS / CAL +3 / 1/4\" / CCIR / REPRO",
       "mapped_parameters": {
         "formula": 3,
         "cal": 0,
         "head": 2,
         "speed": 1,
-        "eq": 0,
+        "eq": 1,
         "link": 1,
         "path": 2
       },
       "mapping_notes": [
-        "Emphasis EQ unspecified: use the NAB default.",
+        "Emphasis EQ unspecified. Clarity-oriented 15 IPS starting point: CCIR; chosen for an ambiguous source field, not recovered UAD calibration.",
         "Sync/Repro interpreted as REPRO; SYNC remains independently selectable."
       ]
     },
@@ -1586,18 +1595,18 @@ static constexpr const char* presetMetadataJson = u8R"PRESETS({
       },
       "id": "bank/Vocal/Classic Vocal Lift",
       "category": "Vocal",
-      "description": "900 / 15 IPS / CAL +6 / 1/2\" / NAB / REPRO",
+      "description": "900 / 15 IPS / CAL +6 / 1/2\" / CCIR / REPRO",
       "mapped_parameters": {
         "formula": 4,
         "cal": 1,
         "head": 1,
         "speed": 1,
-        "eq": 0,
+        "eq": 1,
         "link": 1,
         "path": 2
       },
       "mapping_notes": [
-        "Emphasis EQ unspecified: use the NAB default.",
+        "Emphasis EQ unspecified. Clarity-oriented 15 IPS starting point: CCIR; chosen for an ambiguous source field, not recovered UAD calibration.",
         "Sync/Repro interpreted as REPRO; SYNC remains independently selectable."
       ]
     },
@@ -1614,18 +1623,18 @@ static constexpr const char* presetMetadataJson = u8R"PRESETS({
       },
       "id": "bank/Vocal/Classic Vocal Smooth",
       "category": "Vocal",
-      "description": "456 / 15 IPS / CAL +6 / 1/2\" / NAB / REPRO",
+      "description": "456 / 15 IPS / CAL +6 / 1/2\" / CCIR / REPRO",
       "mapped_parameters": {
         "formula": 1,
         "cal": 1,
         "head": 1,
         "speed": 1,
-        "eq": 0,
+        "eq": 1,
         "link": 1,
         "path": 2
       },
       "mapping_notes": [
-        "Emphasis EQ unspecified: use the NAB default.",
+        "Emphasis EQ unspecified. Clarity-oriented 15 IPS starting point: CCIR; chosen for an ambiguous source field, not recovered UAD calibration.",
         "Sync/Repro interpreted as REPRO; SYNC remains independently selectable."
       ]
     },
@@ -1740,7 +1749,7 @@ static constexpr const char* presetMetadataJson = u8R"PRESETS({
         "path": 2
       },
       "mapping_notes": [
-        "Emphasis EQ unspecified: use the NAB default.",
+        "Emphasis EQ unspecified. Conservative vintage/low-speed starting point: NAB; chosen for an ambiguous source field, not recovered UAD calibration.",
         "Sync/Repro interpreted as REPRO; SYNC remains independently selectable."
       ]
     },
@@ -1858,7 +1867,7 @@ static constexpr const char* presetMetadataJson = u8R"PRESETS({
         "path": 2
       },
       "mapping_notes": [
-        "Multiple emphasis choices: use the first (NAB); retain both source values.",
+        "Multiple emphasis choices retained in source. Conservative vintage/low-speed starting point: NAB; chosen for an ambiguous source field, not recovered UAD calibration.",
         "Sync/Repro interpreted as REPRO; SYNC remains independently selectable."
       ]
     },
@@ -1973,7 +1982,7 @@ static constexpr const char* presetMetadataJson = u8R"PRESETS({
         "path": 2
       },
       "mapping_notes": [
-        "Emphasis EQ unspecified: use the NAB default.",
+        "Emphasis EQ unspecified. Conservative vintage/low-speed starting point: NAB; chosen for an ambiguous source field, not recovered UAD calibration.",
         "Sync/Repro interpreted as REPRO; SYNC remains independently selectable."
       ]
     },
@@ -2001,7 +2010,7 @@ static constexpr const char* presetMetadataJson = u8R"PRESETS({
         "path": 2
       },
       "mapping_notes": [
-        "Emphasis EQ unspecified: use the NAB default.",
+        "Emphasis EQ unspecified. Conservative vintage/low-speed starting point: NAB; chosen for an ambiguous source field, not recovered UAD calibration.",
         "Sync/Repro interpreted as REPRO; SYNC remains independently selectable."
       ]
     },
@@ -2029,7 +2038,7 @@ static constexpr const char* presetMetadataJson = u8R"PRESETS({
         "path": 2
       },
       "mapping_notes": [
-        "Emphasis EQ unspecified: use the NAB default.",
+        "Emphasis EQ unspecified. Conservative vintage/low-speed starting point: NAB; chosen for an ambiguous source field, not recovered UAD calibration.",
         "Sync/Repro interpreted as REPRO; SYNC remains independently selectable."
       ]
     },
@@ -2057,7 +2066,7 @@ static constexpr const char* presetMetadataJson = u8R"PRESETS({
         "path": 2
       },
       "mapping_notes": [
-        "Emphasis EQ unspecified: use the NAB default.",
+        "Emphasis EQ unspecified. Conservative vintage/low-speed starting point: NAB; chosen for an ambiguous source field, not recovered UAD calibration.",
         "Sync/Repro interpreted as REPRO; SYNC remains independently selectable."
       ]
     },
@@ -2085,7 +2094,7 @@ static constexpr const char* presetMetadataJson = u8R"PRESETS({
         "path": 2
       },
       "mapping_notes": [
-        "Emphasis EQ unspecified: use the NAB default.",
+        "Emphasis EQ unspecified. Conservative vintage/low-speed starting point: NAB; chosen for an ambiguous source field, not recovered UAD calibration.",
         "Sync/Repro interpreted as REPRO; SYNC remains independently selectable."
       ]
     },
@@ -2113,7 +2122,7 @@ static constexpr const char* presetMetadataJson = u8R"PRESETS({
         "path": 2
       },
       "mapping_notes": [
-        "Emphasis EQ unspecified: use the NAB default.",
+        "Emphasis EQ unspecified. Conservative vintage/low-speed starting point: NAB; chosen for an ambiguous source field, not recovered UAD calibration.",
         "Sync/Repro interpreted as REPRO; SYNC remains independently selectable."
       ]
     },
@@ -2141,7 +2150,7 @@ static constexpr const char* presetMetadataJson = u8R"PRESETS({
         "path": 2
       },
       "mapping_notes": [
-        "Emphasis EQ unspecified: use the NAB default.",
+        "Emphasis EQ unspecified. Conservative vintage/low-speed starting point: NAB; chosen for an ambiguous source field, not recovered UAD calibration.",
         "Sync/Repro interpreted as REPRO; SYNC remains independently selectable."
       ]
     },

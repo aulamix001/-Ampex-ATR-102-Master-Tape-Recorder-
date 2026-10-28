@@ -1,0 +1,66 @@
+{
+  "release": "0.1.3",
+  "scope": "Ambiguous emphasis EQ only; original supplied bank retained.",
+  "changed_presets": [
+    {
+      "category": "Master",
+      "name": "Classic 250 Warm Master",
+      "before": "NAB",
+      "after": "CCIR"
+    },
+    {
+      "category": "Master",
+      "name": "Pushed 456 Demo Helper",
+      "before": "NAB",
+      "after": "CCIR"
+    },
+    {
+      "category": "Master",
+      "name": "Pushed 456 Fat Master",
+      "before": "NAB",
+      "after": "CCIR"
+    },
+    {
+      "category": "Master",
+      "name": "Pushed 468 Modern Classic",
+      "before": "NAB",
+      "after": "CCIR"
+    },
+    {
+      "category": "Master",
+      "name": "Pushed GP9 Hyped Up",
+      "before": "NAB",
+      "after": "CCIR"
+    },
+    {
+      "category": "Clean",
+      "name": "Clean Ultralinear Master",
+      "before": "NAB",
+      "after": "CCIR"
+    },
+    {
+      "category": "Bright",
+      "name": "Pushed 456 Demo Helper",
+      "before": "NAB",
+      "after": "CCIR"
+    },
+    {
+      "category": "Bright",
+      "name": "Pushed GP9 Hyped Up",
+      "before": "NAB",
+      "after": "CCIR"
+    },
+    {
+      "category": "Vocal",
+      "name": "Classic Vocal Lift",
+      "before": "NAB",
+      "after": "CCIR"
+    },
+    {
+      "category": "Vocal",
+      "name": "Classic Vocal Smooth",
+      "before": "NAB",
+      "after": "CCIR"
+    }
+  ]
+}

@@ -2,7 +2,7 @@
 
 Independent stereo tape effect inspired by the supplied ATR-102 front-panel references. Native **VST3 for Windows x64**, with a standalone application and an earlier browser prototype (`index.html`). Not affiliated with or endorsed by Ampex or Universal Audio. The interface is procedurally drawn; it is not an exact reproduction of proprietary artwork. DSP is an original approximation, not a measured hardware model.
 
-[Download Windows x64 VST3](releases/ATR102-Windows-x64-v0.1.2.zip) · [Validation](VALIDATION.md)
+[Download Windows x64 VST3](releases/ATR102-Windows-x64-v0.1.3.zip) · [Validation](VALIDATION.md)
 
 ![Closed panel](docs/windows-closed.png)
 ![Open panel](docs/windows-open.png)
@@ -47,8 +47,9 @@ Presets are available through the native toolbar and host program API. Selecting
 ## Imported-bank mapping
 
 - Tape formula, CAL, head width, speed and LINK are mapped directly from each supplied entry.
-- Empty `emphasis_eq` selects the NAB default; arrays containing NAB and CCIR select their first value (NAB). Both original values remain in the source metadata. The processor has one global EQ selector, so it cannot enable both simultaneously.
-- `Sync/Repro` selects REPRO. SYNC remains manually selectable and currently shares the same processing model.
+- A single explicit `emphasis_eq` is retained exactly. For an empty array or a choice between NAB and CCIR at 15 IPS, the engineering starting point is CCIR for Master, Clean, Bright and Vocal; NAB for Vintage, Lo-Fi, Pushed, Bass, Classic, Drums and Guitars. At 7.5/3.75 IPS ambiguous EQ uses NAB. At 30 IPS the EQ selector is inactive (AES mode). If multiple source options are supplied, the chosen EQ must be one of them. The source arrays remain unchanged.
+- These are category-oriented starting choices in this approximate model, not an objective best setting for every mix, a measured alignment procedure or recovered original UAD calibration. Version 0.1.3 changes only ten ambiguous EQ choices relative to 0.1.2; every explicitly specified parameter remains intact. Saved DAW states keep their explicit EQ values; reselecting a bank program applies the new starting choice.
+- `Sync/Repro` selects REPRO as the mastering starting path. SYNC remains manually selectable and currently shares the same processing model.
 - Record/Reproduce gain, trims, noise, wow/flutter, crosstalk, transformer and autogain were not specified in the supplied bank; they use plugin defaults. No hidden gain or EQ adjustments were invented based on preset names.
 - Three names have conflicting category variants: Clean Ultralinear Master (Master/Clean), Vintage Type 111 Lo Fi (Vintage/Lo-Fi), and Pushed Bright and Sizzly (Pushed/Bright). They remain separate programs and files.
 - The bank is user-supplied. Its official origin, completeness and sonic equivalence to UAD presets have not been verified; these are parameter mappings into our independent approximate model.

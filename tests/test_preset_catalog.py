@@ -26,10 +26,33 @@ class CatalogTests(unittest.TestCase):
                 self.assertEqual(['+3', '+6', '+7.5', '+9'][mapped['cal']], settings['cal'])
                 self.assertEqual(['1"', '1/2"', '1/4"'][mapped['head']], settings['head'])
                 self.assertEqual([30, 15, 7.5, 3.75][mapped['speed']], settings['speed'])
-                self.assertEqual(['NAB', 'CCIR'][mapped['eq']], next(iter(settings['emphasis_eq']), 'NAB'))
+                options = settings['emphasis_eq']
+                if len(options) == 1:
+                    expected_eq = options[0]
+                else:
+                    expected_eq = 'CCIR' if settings['speed'] == 15 and original['category'] in {'Master', 'Clean', 'Bright', 'Vocal'} else 'NAB'
+                self.assertEqual(['NAB', 'CCIR'][mapped['eq']], expected_eq)
                 self.assertEqual(mapped['link'], settings['link'])
                 self.assertEqual(mapped['path'], 2)
                 self.assertEqual(set(mapped), {'formula', 'cal', 'head', 'speed', 'eq', 'link', 'path'})
+
+    def test_engineering_policy_edge_cases(self):
+        import importlib.util
+        spec = importlib.util.spec_from_file_location('preset_generator', ROOT / 'scripts/generate-preset-metadata.py')
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        cases = [
+            ('Master', 15, [], 'CCIR'), ('Clean', 15, ['NAB', 'CCIR'], 'CCIR'),
+            ('Vocal', 15, [], 'CCIR'), ('Bright', 15, [], 'CCIR'),
+            ('Vintage', 15, ['NAB', 'CCIR'], 'NAB'), ('Pushed', 15, [], 'NAB'),
+            ('Bass', 15, [], 'NAB'), ('Drums', 15, [], 'NAB'),
+            ('Master', 7.5, [], 'NAB'), ('Clean', 3.75, ['NAB', 'CCIR'], 'NAB'),
+            ('Master', 15, ['NAB'], 'NAB'), ('Vintage', 15, ['CCIR'], 'CCIR'),
+            ('Master', 30, [], 'NAB'),
+        ]
+        for category, speed, options, expected in cases:
+            with self.subTest(category=category, speed=speed, options=options):
+                self.assertEqual(module.resolve_eq(category, speed, options)[0], expected)
 
     def test_conflicting_names_remain_separate(self):
         presets = json.loads((ROOT / 'presets/catalog.json').read_text())['presets']

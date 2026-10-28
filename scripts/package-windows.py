@@ -26,7 +26,7 @@ with zipfile.ZipFile(out, 'w', zipfile.ZIP_DEFLATED, compresslevel=9) as z:
     for f in sorted(bundle.rglob('*')):
         if f.is_file():
             z.write(f, f.relative_to(bundle.parent))
-    for metadata in ['presets.json', 'imported-bank.json', 'catalog.json', 'README.md']:
+    for metadata in ['presets.json', 'imported-bank.json', 'catalog.json', 'engineering-decisions.json', 'README.md']:
         z.write(root / 'presets' / metadata, 'presets/' + metadata)
     for f in presets:
         z.write(f, f.relative_to(root))
