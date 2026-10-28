@@ -29,7 +29,7 @@ jobs:
           New-Item -ItemType Directory -Path dist -Force
           Copy-Item "build/ATR102_artefacts/Release/VST3/ATR-102 Tape Studio.vst3" dist -Recurse
           Copy-Item presets dist -Recurse
-          Copy-Item README.md,THIRD_PARTY.md dist
+          Copy-Item README.md,THIRD_PARTY.md,LICENSE dist
           Compress-Archive -Path dist/* -DestinationPath ATR102-Windows-x64.zip
       - uses: actions/upload-artifact@v4
         with:

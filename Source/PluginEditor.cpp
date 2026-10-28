@@ -16,12 +16,23 @@ void TapeLook::drawRotarySlider(juce::Graphics& g,int x,int y,int w,int h,float 
  const float len=radius*(trim?.8f:.88f);g.setColour(cream);g.drawLine(centre.x,centre.y,centre.x+std::sin(angle)*len,centre.y-std::cos(angle)*len,trim?2.f:3.f);
 }
 void TapeLook::drawButtonBackground(juce::Graphics& g,juce::Button& b,const juce::Colour&,bool hover,bool down){
+ if(b.getComponentID().startsWith("meter")||b.getComponentID().startsWith("autogain")){
+  const float cx=b.getWidth()*.5f,cy=b.getHeight()*.5f;
+  g.setColour(juce::Colours::black);g.fillEllipse(cx-9,cy-5,18,10);g.setColour(juce::Colour(0xffb2b5a5));g.drawEllipse(cx-9,cy-5,18,10,1);
+  const float end=cx+(b.getToggleState()?11.f:-11.f);g.setGradientFill(juce::ColourGradient(juce::Colour(0xfff1edda),cx,cy-3,juce::Colour(0xff33392b),cx,cy+3,false));g.drawLine(cx,cy,end,cy-1,5);return;
+ }
+ if(b.getComponentID()=="power"){
+  g.setColour(juce::Colours::black);g.fillRect(1,0,14,b.getHeight());g.setGradientFill(juce::ColourGradient(juce::Colour(0xff737765),0,0,juce::Colour(0xff161b0f),0,14,false));g.fillRect(3,2,10,8);g.setColour(b.getToggleState()?green:green.darker(1));g.fillEllipse(37,6,5,5);return;
+ }
  if((bool)b.getProperties()["matrix"]){g.setColour(juce::Colour(0xff34372d));g.fillRect(b.getLocalBounds());g.setColour(juce::Colour(0xff70715f));g.drawRect(b.getLocalBounds());return;}
  const auto a=b.getLocalBounds().toFloat();g.setColour(juce::Colour(0xff20231b));g.fillRoundedRectangle(a,2);g.setColour(juce::Colours::black);g.drawRoundedRectangle(a.reduced(.5f),2,1);
  const bool manual=b.getComponentID()=="autoCal"&&!b.getToggleState();const auto led=b.getToggleState()?green:(manual?juce::Colour(0xffe3482c):juce::Colour(0xff3b4130));g.setColour(led.withAlpha(.18f));g.fillEllipse(a.getCentreX()-5,13,10,10);g.setColour(led);g.fillEllipse(a.getCentreX()-2,16,4,4);
  auto key=a.reduced(6).withTop(25).withBottom(a.getBottom()-5);g.setColour(juce::Colours::black);g.fillRoundedRectangle(key.expanded(2),1);const bool red=b.getButtonText()=="SYNC";g.setGradientFill(juce::ColourGradient(red?juce::Colour(0xffed3043):juce::Colour(0xfff3dfa0),key.getTopLeft(),red?juce::Colour(0xffa50521):juce::Colour(0xffc8b878),key.getBottomLeft(),false));g.fillRoundedRectangle(key.translated(0,down?1:0),1);if(hover){g.setColour(juce::Colours::white.withAlpha(.08f));g.fillRect(a);}
 }
-void TapeLook::drawButtonText(juce::Graphics& g,juce::TextButton& b,bool,bool){bool matrix=(bool)b.getProperties()["matrix"];text(g,b.getButtonText(),matrix?b.getLocalBounds().toFloat():b.getLocalBounds().toFloat().withHeight(14),matrix?11.f:8.f,matrix?(b.getToggleState()?juce::Colour(0xffffdc65):juce::Colour(0xffb4b3a0)):cream);}
+void TapeLook::drawButtonText(juce::Graphics& g,juce::TextButton& b,bool,bool){
+ if(b.getComponentID().startsWith("meter")||b.getComponentID().startsWith("autogain")){bool meter=b.getComponentID().startsWith("meter");text(g,meter?"IN":"OFF",{0,0,18,(float)b.getHeight()},7);text(g,meter?"OUT":"ON",{(float)b.getWidth()-18,0,18,(float)b.getHeight()},7);return;}
+ if(b.getComponentID()=="power"){text(g,"ON",{17,0,17,8},6);text(g,"OFF",{17,10,17,8},6);return;}
+ bool matrix=(bool)b.getProperties()["matrix"];text(g,b.getButtonText(),matrix?b.getLocalBounds().toFloat():b.getLocalBounds().toFloat().withHeight(14),matrix?11.f:8.f,matrix?(b.getToggleState()?juce::Colour(0xffffdc65):juce::Colour(0xffb4b3a0)):cream);}
 void TapeEditor::editParameter(const juce::String& id,float v){auto* p=processor.parameters.getParameter(id);p->beginChangeGesture();processor.setParameter(id,v);p->endChangeGesture();}
 void TapeEditor::dial(const juce::String& id,juce::Rectangle<int> bounds,bool secondary,float base){Dial d;d.bounds=bounds;d.secondary=secondary;d.slider=std::make_unique<juce::Slider>();auto& s=*d.slider;s.setSliderStyle(juce::Slider::RotaryVerticalDrag);s.setTextBoxStyle(juce::Slider::NoTextBox,false,0,0);s.setName(id);s.setTooltip(processor.parameters.getParameter(id)->getName(64)+" · drag vertically / double-click to reset");s.setDoubleClickReturnValue(true,0);s.getProperties().set("trim",secondary);s.getProperties().set("base",base);s.setLookAndFeel(&look);addAndMakeVisible(s);d.attachment=std::make_unique<Attachment>(processor.parameters,id,s);dials.push_back(std::move(d));}
 void TapeEditor::control(const juce::String& label,const juce::String& id,float setting,juce::Rectangle<int> bounds,bool toggle,bool secondary){Switch s;s.id=id;s.setting=setting;s.bounds=bounds;s.toggle=toggle;s.secondary=secondary;s.button=std::make_unique<juce::TextButton>(label);auto* b=s.button.get();b->setComponentID(id);b->setName(processor.parameters.getParameter(id)->getName(80)+" "+label);b->setLookAndFeel(&look);if(bounds.getHeight()<=23)b->getProperties().set("matrix",true);b->onClick=[this,id,setting,toggle]{if(id=="autoCal")processor.calibrate();else editParameter(id,toggle?1-processor.value(id):setting);};addAndMakeVisible(*b);switches.push_back(std::move(s));}
@@ -41,7 +52,7 @@ TapeEditor::TapeEditor(TapeProcessor& p):AudioProcessorEditor(p),processor(p){
  for(int i=0;i<p.getNumPrograms();++i)presets.addItem(p.getProgramName(i),i+1);presets.setSelectedId(p.getCurrentProgram()+1,juce::dontSendNotification);presets.onChange=[this]{processor.setCurrentProgram(presets.getSelectedId()-1);};addAndMakeVisible(presets);addAndMakeVisible(save);addAndMakeVisible(load);
  save.onClick=[this]{chooser=std::make_unique<juce::FileChooser>("Save tape preset",juce::File::getSpecialLocation(juce::File::userDocumentsDirectory).getChildFile("Tape.atrpreset"),"*.atrpreset");chooser->launchAsync(juce::FileBrowserComponent::saveMode|juce::FileBrowserComponent::canSelectFiles|juce::FileBrowserComponent::warnAboutOverwriting,[safe=juce::Component::SafePointer<TapeEditor>(this)](const juce::FileChooser& fc){if(safe&&fc.getResult()!=juce::File())safe->processor.savePreset(fc.getResult().withFileExtension("atrpreset"));});};
  load.onClick=[this]{chooser=std::make_unique<juce::FileChooser>("Load tape preset",juce::File(),"*.atrpreset");chooser->launchAsync(juce::FileBrowserComponent::openMode|juce::FileBrowserComponent::canSelectFiles,[safe=juce::Component::SafePointer<TapeEditor>(this)](const juce::FileChooser& fc){if(safe&&fc.getResult().existsAsFile())safe->processor.loadPreset(fc.getResult());});};
- timerCallback();startTimerHz(30);
+ resized();timerCallback();startTimerHz(30);
 }
 TapeEditor::~TapeEditor(){stopTimer();for(auto& d:dials)d.slider->setLookAndFeel(nullptr);for(auto& s:switches)s.button->setLookAndFeel(nullptr);}
 void TapeEditor::resized(){for(auto& d:dials)d.slider->setBounds(d.bounds);for(auto& s:switches)s.button->setBounds(s.bounds);presets.setBounds(10,7,260,27);save.setBounds(280,7,65,27);load.setBounds(350,7,65,27);}
@@ -61,11 +72,11 @@ void TapeEditor::drawMeter(juce::Graphics& g,int c,float x,float y){
  juce::Path arc;for(int i=0;i<=40;++i){float a=juce::degreesToRadians(-51.f+i*2.55f);float ax=px+std::sin(a)*77,ay=py-std::cos(a)*77;if(i==0)arc.startNewSubPath(ax,ay);else arc.lineTo(ax,ay);}g.setColour(juce::Colour(0xff57331d));g.strokePath(arc,juce::PathStrokeType(.6f));
  for(int i=0;i<10;++i){float a=juce::degreesToRadians(-51.f+i*11.33f);auto col=i>=6?juce::Colour(0xffd12617):juce::Colour(0xff392416);g.setColour(col);g.drawLine(px+std::sin(a)*77,py-std::cos(a)*77,px+std::sin(a)*83,py-std::cos(a)*83,.8f);text(g,juce::String(nums[i]),{px+std::sin(a)*92-9,py-std::cos(a)*92-5,18,10},7,col);}
  juce::Path red;for(int i=0;i<=15;++i){float a=juce::degreesToRadians(17.f+i*2.2f);float xx=px+std::sin(a)*74,yy=py-std::cos(a)*74;if(i==0)red.startNewSubPath(xx,yy);else red.lineTo(xx,yy);}g.setColour(juce::Colour(0xffdf2e1b));g.strokePath(red,juce::PathStrokeType(2));
- text(g,"VU",{x+55,y+56,46,12},9,juce::Colour(0xff50351e));float vu=juce::Decibels::gainToDecibels(meterLevel[(size_t)c],-60.f)+12;float a=juce::degreesToRadians(juce::jlimit(-51.f,51.f,vu*2.4f+17));g.setColour(juce::Colour(0xff392719));g.drawLine(px,py,px+std::sin(a)*89,py-std::cos(a)*89,1);g.setColour(vu>3?juce::Colour(0xffff3920):juce::Colour(0xff7e321d));g.fillEllipse(x+144,y+7,4,4);
+ text(g,"VU",{x+55,y+56,46,12},9,juce::Colour(0xff50351e));float vu=juce::Decibels::gainToDecibels(meterLevel[(size_t)c],-60.f)+12;float a=juce::degreesToRadians(juce::jlimit(-51.f,51.f,vu*2.4f+17));g.saveState();g.reduceClipRegion(box.toNearestInt());g.setColour(juce::Colour(0xff392719));g.drawLine(px,py,px+std::sin(a)*89,py-std::cos(a)*89,1);g.restoreState();g.setColour(vu>3?juce::Colour(0xffff3920):juce::Colour(0xff7e321d));g.fillEllipse(x+144,y+7,4,4);
  text(g,c==0?"LEFT":"RIGHT",{x,y+87,156,15},10);g.setColour(juce::Colour(0xff070a05));g.fillEllipse(x+72,y+108,11,11);g.setColour(juce::Colour(0xff5a5c4f));g.drawLine(x+74,y+116,x+81,y+111,.7f);
 }
 void TapeEditor::paint(juce::Graphics& g){
- g.fillAll(juce::Colour(0xff151912));text(g,"ATR-102 · TAPE STUDIO",{435,7,275,27},13);
+ g.fillAll(juce::Colour(0xff151912));text(g,"ATR-102 / TAPE STUDIO",{435,7,275,27},13);
  const juce::Rectangle<float> chassis(3,42,714,662);g.setColour(cream);g.fillRect(chassis);g.setColour(juce::Colour(0xff878979));g.drawRect(chassis,2);g.setTiledImageFill(texture,0,0,1);g.fillRect(9,49,702,648);
  // Cropped metal reels, behind the fixed meter bridge.
  {juce::Graphics::ScopedSaveState saved(g);g.reduceClipRegion(10,190,700,498);
@@ -83,6 +94,8 @@ void TapeEditor::paint(juce::Graphics& g){
  // Tape transport and tension rollers.
  g.setTiledImageFill(texture,0,0,1);g.fillRoundedRectangle(181,425,359,65,26);g.setColour(juce::Colours::black);g.drawRoundedRectangle(181,425,359,65,26,3);
  for(float x:{223.f,492.f}){g.setColour(juce::Colour(0xff040701));g.fillEllipse(x-26,434,52,52);g.setColour(juce::Colour(0xffc5bd91));g.fillEllipse(x-18,440,36,36);g.setColour(juce::Colour(0xff909385));g.fillEllipse(x-9,451,18,18);g.setColour(juce::Colour(0xffdedcc6));g.drawEllipse(x-9,451,18,18,1);}
+ // Rotary speed selector with the four clickable scale positions to its left.
+ g.setGradientFill(juce::ColourGradient(juce::Colour(0xff555b4a),429,437,juce::Colours::black,458,467,false));g.fillEllipse(430,438,29,29);g.setColour(cream);float speedAngle=juce::degreesToRadians(-45.f+processor.value("speed")*30);g.drawLine(444.5f,452.5f,444.5f+std::sin(speedAngle)*11,452.5f-std::cos(speedAngle)*11,3);
  if(processor.value("open")>.5f){g.setGradientFill(juce::ColourGradient(cream,180,500,juce::Colour(0xffa0a28e),535,640,false));g.fillRect(178,495,362,154);g.setColour(ink);g.drawRect(178,495,362,154,2);g.fillRect(178,558,362,5);g.fillRect(357,565,3,84);for(int c=0;c<2;++c){float x=184+c*180.f;text(g,c==0?"LEFT":"RIGHT",{x,569,165,13},10,ink);text(g,"RECORD EQ       BIAS       REPRO EQ",{x,585,165,12},8,ink);const juce::StringArray names{"HF","SHELF","BIAS","LF","HF"};for(int i=0;i<5;++i)text(g,names[i],{x+i*34,633,32,12},8,ink);}}
  else{
   juce::Path base;base.startNewSubPath(183,540);base.lineTo(534,540);base.lineTo(441,640);base.lineTo(285,640);base.closeSubPath();g.setColour(ink.darker());g.fillPath(base);
@@ -92,5 +105,5 @@ void TapeEditor::paint(juce::Graphics& g){
   juce::Path lip;lip.startNewSubPath(291,644);lip.lineTo(431,644);lip.lineTo(415,660);lip.lineTo(307,660);lip.closeSubPath();g.setColour(cream);g.fillPath(lip);
   juce::Path guide;guide.addRectangle(-18,-27,36,54);g.setGradientFill(juce::ColourGradient(juce::Colour(0xffe5e4d6),480,624,juce::Colour(0xff6e7666),520,650,false));g.fillPath(guide,juce::AffineTransform::rotation(-.48f).translated(508,637));
  }
- text(g,"INDEPENDENT TAPE MODEL · −12 dBFS = 0 VU",{175,681,370,17},8);
+ text(g,"INDEPENDENT TAPE MODEL / -12 dBFS = 0 VU",{175,681,370,17},8);
 }

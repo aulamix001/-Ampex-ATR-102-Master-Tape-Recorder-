@@ -2,6 +2,11 @@
 
 Independent stereo tape effect inspired by the supplied ATR-102 front-panel references. Native **VST3 for Windows x64**, with a standalone application and an earlier browser prototype (`index.html`). Not affiliated with or endorsed by Ampex or Universal Audio. The interface is procedurally drawn; it is not an exact reproduction of proprietary artwork. DSP is an original approximation, not a measured hardware model.
 
+[Download Windows x64 VST3](releases/ATR102-Windows-x64-v0.1.0.zip) · [Validation](VALIDATION.md)
+
+![Closed panel](docs/windows-closed.png)
+![Open panel](docs/windows-open.png)
+
 ## Windows installation
 
 Extract the Windows x64 package. Copy the entire **`ATR-102 Tape Studio.vst3` directory** to `C:\Program Files\Common Files\VST3\`, then rescan VST3 plugins in your 64-bit DAW. Do not extract the inner `.vst3` binary from its `Contents/x86_64-win` directory. No separate browser or WebView is needed. This build is unsigned.

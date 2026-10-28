@@ -13,4 +13,6 @@ set(CMAKE_CXX_FLAGS_INIT "-static-libgcc -static-libstdc++")
 set(CMAKE_SHARED_LINKER_FLAGS_INIT "-static -static-libgcc -static-libstdc++")
 set(CMAKE_EXE_LINKER_FLAGS_INIT "-static -static-libgcc -static-libstdc++")
 
-set(CMAKE_RC_FLAGS_INIT "-I${MINGW_ROOT}/x86_64-w64-mingw32/include --preprocessor=${MINGW_ROOT}/bin/x86_64-w64-mingw32-gcc-posix")
+set(CMAKE_RC_FLAGS_INIT "-I${MINGW_ROOT}/x86_64-w64-mingw32/include --preprocessor=${MINGW_ROOT}/bin/x86_64-w64-mingw32-gcc-posix --preprocessor-arg=-E --preprocessor-arg=-xc --preprocessor-arg=-DRC_INVOKED")
+
+set(CMAKE_MODULE_LINKER_FLAGS_INIT "-static -static-libgcc -static-libstdc++")
