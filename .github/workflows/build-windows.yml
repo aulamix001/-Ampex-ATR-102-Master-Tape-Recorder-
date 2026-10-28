@@ -1,0 +1,38 @@
+name: Windows VST3
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  windows-vst3:
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure Windows x64
+        run: cmake -S . -B build -A x64 -DCMAKE_BUILD_TYPE=Release
+      - name: Compile VST3, standalone and tests
+        run: cmake --build build --config Release --parallel 3
+      - name: Processor tests
+        run: ctest --test-dir build -C Release --output-on-failure
+      - name: Test real VST3 loading and processing
+        shell: pwsh
+        run: '& "build/ATR102Tests_artefacts/Release/ATR102Tests.exe" --vst3 "$PWD/build/ATR102_artefacts/Release/VST3/ATR-102 Tape Studio.vst3"'
+      - name: Export factory presets
+        shell: pwsh
+        run: '& "build/ATR102Tests_artefacts/Release/ATR102Tests.exe" --export-presets'
+      - name: Stage installation package
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Path dist -Force
+          Copy-Item "build/ATR102_artefacts/Release/VST3/ATR-102 Tape Studio.vst3" dist -Recurse
+          Copy-Item presets dist -Recurse
+          Copy-Item README.md,THIRD_PARTY.md dist
+          Compress-Archive -Path dist/* -DestinationPath ATR102-Windows-x64.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ATR102-Windows-x64
+          path: ATR102-Windows-x64.zip
+          if-no-files-found: error
